@@ -1,0 +1,31 @@
+.text-centered{
+    text-align: center;
+}
+.div-produto{
+    border: solid 1px black;
+    border-radius: 2%;
+    text-align: center;
+    padding: 7%;
+    margin-bottom: 5%;
+}
+.div-produto > img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.div-produto > .classific{
+    margin-top: 100px;
+}
+.div-produto > img{
+    width: 20vh;
+}
+.produtos{
+    padding: 10%;
+    display: grid;
+    grid-template-columns: 2fr 2fr 2fr 2fr;
+    grid-gap: 100px;
+}
+#carrinho{
+    border: solid 1px black;
+    display: none;
+}
