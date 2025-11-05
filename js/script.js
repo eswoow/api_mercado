@@ -78,19 +78,22 @@ function abrirCarrinho(){
         document.getElementById("carrinho").style.display = "block";
     }
 }
-function adicionarAoCarrinho(nome, preco){
-    let carrinhoHTML = document.getElementById("carrinho");
-    const quantAtualItensCarrinho = carrinho.length;
-    carrinho.push(`${quantAtualItensCarrinho} | ${nome} | R$${preco} <button onclick="removerItem(${quantAtualItensCarrinho})">Remover</button> <br>`);
-    let carrinhoStr = String(carrinho);
-    carrinhoStr = carrinhoStr.replaceAll(',', " ")
-    carrinhoHTML.innerHTML = carrinhoStr;
+function atualizarCarrinho(){
+    let textCarrinho = document.getElementById("textCarrinho");
+    if(carrinho.length === 0){
+        textCarrinho.innerHTML = "Está vazio!";
+    }else{
+        textCarrinho.innerHTML = "";
+        for (let index = 0; index < carrinho.length; index++) {
+            textCarrinho.innerHTML += `${index + 1} | ${carrinho[index]} | <button onclick="removerProd(${index})">Remover</button><br>`;
+        }
+    }
 }
-function removerItem(id){
-    let carrinhoHTML = document.getElementById("carrinho");
-    console.log(carrinho.length);
-    let carrinhoStr = String(carrinho);
-    carrinhoStr = carrinhoStr.replaceAll(',', " ")
-    carrinhoHTML.innerHTML = carrinhoStr;
-
+function adicionarAoCarrinho(nome, preco){
+    carrinho.push(`${nome} | R$${preco}`);
+    atualizarCarrinho();
+}
+function removerProd(id){
+    carrinho.splice(id, 1);
+    atualizarCarrinho();
 }

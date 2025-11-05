@@ -1,3 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Elms+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+body{
+    font-family: 'Elms Sans', sans-serif;
+}
+
 .text-centered{
     text-align: center;
 }
@@ -22,10 +27,30 @@
 .produtos{
     padding: 10%;
     display: grid;
-    grid-template-columns: 2fr 2fr 2fr 2fr;
-    grid-gap: 100px;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 5vh;
 }
 #carrinho{
-    border: solid 1px black;
     display: none;
+    border: solid 1px black;
+    margin: 0vh 30vh;
+    border-radius: 2%;
+    padding: 1%;
+}
+.right{
+    display: flex;
+    float: right;
+    margin-right: 30vh;
+}
+button{
+    border: solid 1px black;
+    border-radius: 5vh;
+    background-color: rgb(255, 255, 255);
+    color: black;
+    transition: background-color 2s, color 2s;
+}
+button:hover{
+    background-color: rgb(130, 130, 130);
+    color: white;
+    transition: background-color 2s, color 2s;
 }
