@@ -2,9 +2,21 @@
 body{
     font-family: 'Elms Sans', sans-serif;
 }
-
+#map {
+    display: flex;
+    height: 500px;
+    width: 500px;
+}
+#preparandoCompra{
+    padding: 10%;
+}
 .text-centered{
     text-align: center;
+}
+#right{
+    text-align: center;
+    float: right;
+    margin-right: 20%;
 }
 .div-produto{
     border: solid 1px black;
@@ -23,6 +35,11 @@ body{
 }
 .div-produto > img{
     width: 20vh;
+    transition: width 500ms;
+}
+.div-produto > img:hover{
+    width: 30vh;
+    transition: width 500ms;
 }
 .produtos{
     padding: 10%;
@@ -43,14 +60,28 @@ body{
     margin-right: 30vh;
 }
 button{
+    text-align: center;
     border: solid 1px black;
     border-radius: 5vh;
     background-color: rgb(255, 255, 255);
     color: black;
-    transition: background-color 2s, color 2s;
+    box-shadow: 0px 0px 0px rgb(255, 255, 255);
+    transition: background-color 500ms, color 500ms, box-shadow 500ms;
 }
 button:hover{
     background-color: rgb(130, 130, 130);
     color: white;
-    transition: background-color 2s, color 2s;
+    box-shadow: 5px 1px 25px rgb(130, 130, 130);
+    transition: background-color 500ms, color 500ms, box-shadow 500ms;
+}
+.comprarCarrinho{
+    display: none;
+}
+p{
+    font-size: 16px;
+    transition: font-size 500ms;
+}
+p:hover{
+    font-size: 20px;
+    transition: font-size 500ms;
 }

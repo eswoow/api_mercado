@@ -1,9 +1,51 @@
 var api = `https://fakestoreapi.com/products`;
 var carrinho = [];
 var stars = 0;
-var carrinhoAberto = false;
+var carrinhoAberto = true;
 var respJson;
+//mapa
+var map = L.map('map').setView([-12.97791518403115, -38.50249779043481], 5);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+var markerUserPosition = L.marker();
+var markerSalvador = L.marker().setLatLng([-12.97791518403115, -38.50249779043481]).addTo(map);
+var hasClicked = false;
+var pontos = [];
+var linha = L.polyline(pontos, {color: 'red'}).addTo(map);
+var locStr = "";
 
+function onMapClick(e){
+    var latlngs = [[-12.97791518403115, -38.50249779043481], e.latlng];
+    locStr = `${e.latlng}`;
+    locStr = locStr.replaceAll("LatLng", "");
+    locStr = locStr.replaceAll("(", "lat=");
+    locStr = locStr.replaceAll(")", "");
+    locStr = locStr.replaceAll(", ", "&lon=");
+    localEntrega();
+    markerUserPosition.setLatLng(e.latlng).addTo(map);
+    pontos = [];
+    pontos.push(latlngs);
+    linha.setLatLngs(pontos);
+}
+
+map.on('click', onMapClick);    
+async function localEntrega(){
+    
+    let api = `https://nominatim.openstreetmap.org/reverse?format=json&${locStr}`;
+    const textCidade = document.getElementById("cidade");
+    const textEstado = document.getElementById("estado");
+    const textBairro = document.getElementById("bairro");
+    const textRua = document.getElementById("rua");
+
+    var res = await fetch(api);
+    var resjson = await res.json();
+    textCidade.innerHTML = `Cidade: ${resjson.address.city}`;
+    textEstado.innerHTML = `Estado: ${resjson.address.state}`;
+    textBairro.innerHTML = `Bairro: ${resjson.address.suburb}`;
+    textRua.innerHTML = `Rua: ${resjson.address.road}`;
+}
 async function onLoad(){
     let productsCount = 20;
     let products = [];
@@ -80,12 +122,16 @@ function abrirCarrinho(){
 }
 function atualizarCarrinho(){
     let textCarrinho = document.getElementById("textCarrinho");
+    let comprarCarrinho = document.getElementById("comprarCarrinho");
+
     if(carrinho.length === 0){
         textCarrinho.innerHTML = "Está vazio!";
+        comprarCarrinho.style.display = "none";
     }else{
         textCarrinho.innerHTML = "";
         for (let index = 0; index < carrinho.length; index++) {
-            textCarrinho.innerHTML += `${index + 1} | ${carrinho[index]} | <button onclick="removerProd(${index})">Remover</button><br>`;
+            textCarrinho.innerHTML += `${index + 1} | ${carrinho[index]} <button onclick="removerProd(${index})">Remover</button><br>`;
+            comprarCarrinho.style.display = "block";
         }
     }
 }
@@ -96,4 +142,17 @@ function adicionarAoCarrinho(nome, preco){
 function removerProd(id){
     carrinho.splice(id, 1);
     atualizarCarrinho();
+}
+function comprar(){
+    if (carrinho.length != 0){
+        let resposta = window.confirm("Quer realizar a compra?");
+        if (resposta == true){
+            window.location.reload();
+        }
+    }else{
+        alert("O carrinho está vazio.")
+    }
+}
+function prepCompra(){
+    var prepCompra = document.getElementById("preparandoCompra").scrollIntoView({behavior: "smooth"});
 }
